@@ -1,0 +1,54 @@
+<div>
+    <h2>AJOUT D'UN PRODUIT</h2>
+    <form (ngSubmit)="addProduit()">
+      <div>
+        <label for="idProduit">idProduit:</label>
+        <input type="number" id="idProduit" [(ngModel)]="newProduit.idProduit" />
+      </div>
+      <div>
+        <label for="code">Code:</label>
+        <input type="text" id="code" [(ngModel)]="newProduit.code" />
+      </div>
+      <div>
+        <label for="libelle">Libelle:</label>
+        <input type="text" id="libelle" [(ngModel)]="newProduit.libelle" />
+      </div>
+      <div>
+        <label for="prixUnitaire">Prix unitaire:</label>
+        <input type="number" id="prixUnitaire" [(ngModel)]="newProduit.prixUnitaire" />
+      </div>
+      <div>
+        <label for="tauxTVA">Taux TVA:</label>
+        <input type="number" id="tauxTVA" [(ngModel)]="newProduit.tauxTVA" />
+      </div>
+      <button type="submit">Ajouter</button>
+    </form>
+  </div>
+  
+
+<div>
+<h1>Liste des Produits</h1>
+
+  <label for="searchCode">Rechercher par code :</label>
+  <input type="text" id="searchCode" [(ngModel)]="searchCode" (input)="searchProduct()" />
+
+
+  <div *ngFor="let produit of filteredProduits" class="produit-item">
+    <h3 [ngStyle]="{ 'color': isLowPriced(produit) ? 'blue' : 'inherit', 'font-style': isLowPriced(produit) ? 'italic' : 'normal', 'font-size': isLowPriced(produit) ? '20px' : 'inherit' }">
+      Produit : {{ produit.libelle }}
+    </h3>
+  <ul>
+    <li>Identifiant : {{ produit.idProduit }}</li>
+    <li>Code : {{ produit.code }}</li>
+    <li>Prix Unitaire : {{ produit.prixUnitaire }}</li>
+    <li>Taux TVA : {{ produit.tauxTVA }}</li>
+  </ul>
+  <button
+    (click)="ajusterTVA(produit)"
+    [disabled]="produit.tauxTVA === 0.20"
+  >
+    Ajuster TVA
+  </button>
+  <p *ngIf="produit.tauxTVA === 0.20">TVA modifiée</p>
+</div>
+</div>
